@@ -1,0 +1,33 @@
+# git 
+alias gbn="git checkout -b"
+alias gm="git merge --no-ff"
+alias gs="git status -sb"
+alias gst="git stash"
+alias gsp="git stash pop"
+alias guc="git reset --soft HEAD^"
+
+# git flow
+alias gff="git flow feature"
+alias gfh="git flow hotfix"
+alias gfr="git flow release"
+alias gfs="git flow support"
+
+# vagrant
+alias vup="vagrant up"
+alias vash="vagrant ssh"
+alias voff="vagrant halt"
+
+# more verbose file utilities
+alias mv="mv -vi"
+alias cp="cp -vai"
+alias rm="rm -v"
+alias chmod="chmod -v"
+alias chown="chown -v"
+
+# others
+alias vi="vim"
+alias bower="noglob bower"
+
+# YAPO.cl
+alias jenna="ssh jenna"
+alias lisa="ssh lisa"
