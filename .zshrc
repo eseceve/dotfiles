@@ -16,6 +16,7 @@ plugins=(
   tmux tmuxinator
   #custom
   cd
+  gitignore
 )
 
 source $ZSH/oh-my-zsh.sh
