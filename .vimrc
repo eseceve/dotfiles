@@ -21,6 +21,7 @@
     Plug 'tpope/vim-repeat'
     Plug 'sjl/clam.vim'
     Plug 'vim-scripts/cr-bs-del-space-tab.vim'
+    Plug 'terryma/vim-multiple-cursors'
 
   " Git and GitHub
     Plug 'tpope/vim-fugitive'
@@ -41,7 +42,6 @@
     Plug 'vim-scripts/vim-flake8'
 
   " Markup languages
-    Plug 'matthias-guenther/hammer.vim'
     Plug 'hallison/vim-markdown'
     Plug 'puppetlabs/puppet-syntax-vim'
 
@@ -57,6 +57,13 @@
   " autocompletition
     Plug 'davidhalter/jedi-vim'
 
+  " javascript
+    Plug 'pangloss/vim-javascript'
+    Plug 'mxw/vim-jsx'
+    Plug 'elzr/vim-json'
+    Plug 'moll/vim-node'
+    Plug 'burnettk/vim-angular'
+    Plug 'leafgarland/typescript-vim'
 
   call plug#end()
 
@@ -76,11 +83,11 @@
     scriptencoding utf-8
 
     if has('clipboard')
-        if has('unnamedplus')  " When possible use + register for copy-paste
-            set clipboard=unnamed,unnamedplus
-        else         " On mac and Windows, use * register for copy-paste
-            set clipboard=unnamed
-        endif
+      if has('unnamedplus')  " When possible use + register for copy-paste
+        set clipboard=unnamed,unnamedplus
+      else         " On mac and Windows, use * register for copy-paste
+        set clipboard=unnamed
+      endif
     endif
 
     set vb t_vb=                        " Disble beep
@@ -96,68 +103,83 @@
     set iskeyword-=#                    " '#' is an end of word designator
     set iskeyword-=-                    " '-' is an end of word designator
 
-    " Instead of reverting the cursor to the last position in the buffer, we
-    " set it to the first line when editing a git commit message
-    au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+  " Setting up the directories
+    if exists('*mkdir') && !isdirectory($HOME.'/.vim/files')
+      call mkdir($HOME.'/.vim/files')
+      call mkdir($HOME.'/.vim/files/backup')
+      call mkdir($HOME.'/.vim/files/info')
+      call mkdir($HOME.'/.vim/files/swap')
+      call mkdir($HOME.'/.vim/files/undo')
+    endif
 
-    " Setting up the directories
-        set backup                      " Backups are nice ...
-        if has('persistent_undo')
-            set undofile                " So is persistent undo ...
-            set undolevels=1000         " Maximum number of changes that can be undone
-            set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
-        endif
+    if has('persistent_undo')
+      set undofile                " So is persistent undo ...
+      set undolevels=1000         " Maximum number of changes that can be undone
+      set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
+      set undodir=$HOME/.vim/files/undo/
+    endif
+
+    set backup
+    set backupdir=$HOME/.vim/files/backup/
+    set backupext=-vimbackup
+    set backupskip=
+    set directory=$HOME/.vim/files/swap/
+    set updatecount=100
+    set viminfo='100,n$HOME/.vim/files/info/viminfo
 
   " Vim UI
-      set laststatus=2                  " Always show statusline
-      set tabpagemax=15                 " Only show 15 tabs
-      set noshowmode                    " Hide the current mode
+    set laststatus=2                  " Always show statusline
+    set tabpagemax=15                 " Only show 15 tabs
+    set noshowmode                    " Hide the current mode
 
-      set cursorline                    " Highlight current line
+    set cursorline                    " Highlight current line
+    set colorcolumn=80                " Highlight column 80
 
-      highlight clear SignColumn        " SignColumn should match background
-      highlight clear LineNr            " Current line number row will have same background color in relative mode
+    highlight clear SignColumn        " SignColumn should match background
+    highlight clear LineNr            " Current line number row will have same background color in relative mode
 
-      set ruler                         " Show the ruler
-      set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-      set showcmd                       " Show partial commands in status line and
-                                        " Selected characters/lines in visual mode
+    set ruler                         " Show the ruler
+    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+    set showcmd                       " Show partial commands in status line and
+                                      " Selected characters/lines in visual mode
 
-      set backspace=indent,eol,start    " Backspace for dummies
-      set linespace=0                   " No extra spaces between rows
-      set number                        " Line numbers on
-      set showmatch                     " Show matching brackets/parenthesis
-      set incsearch                     " Find as you type search
-      set hlsearch                      " Highlight search terms
-      set winminheight=0                " Windows can be 0 line high
-      set ignorecase                    " Case insensitive search
-      set smartcase                     " Case sensitive when uc present
-      set wildmenu                      " Show list instead of just completing
-      set wildmode=list:longest,full    " Command <Tab> completion, list matches, then longest common part, then all.
-      set whichwrap=b,s,h,l,<,>,[,]     " Backspace and cursor keys wrap too
-      set scrolljump=5                  " Lines to scroll when cursor leaves screen
-      set scrolloff=3                   " Minimum lines to keep above and below cursor
-      set foldenable                    " Auto fold code
-      set list
-      set listchars=tab:→→,nbsp:·,eol:¬,trail:·,extends:# " Highlight problematic whitespace
+    set backspace=indent,eol,start    " Backspace for dummies
+    set linespace=0                   " No extra spaces between rows
+    set number                        " Line numbers on
+    set showmatch                     " Show matching brackets/parenthesis
+    set incsearch                     " Find as you type search
+    set hlsearch                      " Highlight search terms
+    set winminheight=0                " Windows can be 0 line high
+    set ignorecase                    " Case insensitive search
+    set smartcase                     " Case sensitive when uc present
+    set wildmenu                      " Show list instead of just completing
+    set wildmode=list:longest,full    " Command <Tab> completion, list matches, then longest common part, then all.
+    set whichwrap=b,s,h,l,<,>,[,]     " Backspace and cursor keys wrap too
+    set scrolljump=5                  " Lines to scroll when cursor leaves screen
+    set scrolloff=3                   " Minimum lines to keep above and below cursor
+    set foldenable                    " Auto fold code
+    set foldmethod=syntax             " Fold code before open a new file
+    set foldlevel=99                  " Folding start closes
+    set list
+    set listchars=tab:→→,nbsp:·,eol:¬,trail:·,extends:# " Highlight problematic whitespace
 
   " Formatting
-      set nowrap                        " Do not wrap long lines
-      set autoindent                    " Indent at the same level of the previous line
-      set shiftwidth=2                  " Use indents of 4 spaces
-      set expandtab                     " Tabs are spaces, not tabs
-      set tabstop=2                     " An indentation every four columns
-      set softtabstop=2                 " Let backspace delete indent
-      set nojoinspaces                  " Prevents inserting two spaces after punctuation on a join (J)
-      set splitright                    " Puts new vsplit windows to the right of the current
-      set splitbelow                    " Puts new split windows to the bottom of the current
-      set matchpairs+=<:>               " Match, to be used with %
-      set pastetoggle=<F12>             " pastetoggle (sane indentation on pastes)
-      set comments=sl:/*,mb:*,elx:*/    " auto format comment blocks
+    set nowrap                        " Do not wrap long lines
+    set autoindent                    " Indent at the same level of the previous line
+    set shiftwidth=2                  " Use indents of 4 spaces
+    set expandtab                     " Tabs are spaces, not tabs
+    set tabstop=2                     " An indentation every four columns
+    set softtabstop=2                 " Let backspace delete indent
+    set nojoinspaces                  " Prevents inserting two spaces after punctuation on a join (J)
+    set splitright                    " Puts new vsplit windows to the right of the current
+    set splitbelow                    " Puts new split windows to the bottom of the current
+    set matchpairs+=<:>               " Match, to be used with %
+    set pastetoggle=<F12>             " pastetoggle (sane indentation on pastes)
+    set comments=sl:/*,mb:*,elx:*/    " auto format comment blocks
 
-      set fileencoding=utf-8            " Default file encoding
-      set fileformats=unix,dos,mac      " Support all EOLs by default
-      set fileformat=unix               " Default end of line
+    set fileencoding=utf-8            " Default file encoding
+    set fileformats=unix,dos,mac      " Support all EOLs by default
+    set fileformat=unix               " Default end of line
 
 
 " Mapping =====================================================================
@@ -221,41 +243,45 @@
   autocmd!
 
   " Restore cursor position
-  autocmd BufReadPost *
-      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
+    autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
 
   " Automatically close popup menu and preview window for omnicompletion
-  autocmd CursorMovedI,InsertLeave *
-      \ if pumvisible() == 0 |
-      \   silent! pclose |
-      \ endif
+    autocmd CursorMovedI,InsertLeave *
+        \ if pumvisible() == 0 |
+        \   silent! pclose |
+        \ endif
 
   " Always put quickfix window in the bottom
-  autocmd FileType qf wincmd J
+    autocmd FileType qf wincmd J
 
   " If last windows is quickfix window, exit Vim
-  autocmd BufEnter *
-      \ if &buftype=="quickfix" || &buftype=="nofile" |
-      \   if winbufnr(2) == -1 |
-      \     quit! |
-      \   endif |
-      \ endif
+    autocmd BufEnter *
+        \ if &buftype=="quickfix" || &buftype=="nofile" |
+        \   if winbufnr(2) == -1 |
+        \     quit! |
+        \   endif |
+        \ endif
 
   " Move to the parent directory in any fugitive tree or blob
-  autocmd User Fugitive
-      \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-      \   nnoremap <silent> <buffer> .. :edit %:h<CR> |
-      \ endif
+    autocmd User Fugitive
+        \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+        \   nnoremap <silent> <buffer> .. :edit %:h<CR> |
+        \ endif
 
   " Autoclean fugitive buffers
-  autocmd BufReadPost fugitive://* set bufhidden=delete
+    autocmd BufReadPost fugitive://* set bufhidden=delete
 
   " Always start on first line of Git commit message
-  autocmd BufEnter *
-      \ if &filetype == 'gitcommit' |
-      \   call setpos('.', [0, 1, 1]) |
-      \ endif
+    autocmd BufEnter *
+        \ if &filetype == 'gitcommit' |
+        \   call setpos('.', [0, 1, 1]) |
+        \ endif
+
+  " some
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+
 
   augroup END
