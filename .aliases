@@ -1,4 +1,4 @@
-# git 
+# git
 alias gbn="git checkout -b"
 alias gm="git merge --no-ff"
 alias gs="git status -sb"
@@ -27,7 +27,15 @@ alias chown="chown -v"
 # others
 alias vi="vim"
 alias bower="noglob bower"
+alias xx="tmux"
+alias xa="tmux a"
+alias xls="tmux ls"
+alias virc="vi ~/.vimrc"
 
-# YAPO.cl
+# type errors
+alias vu=vi
+alias {=~
+
+# YAPO.cl
 alias jenna="ssh jenna"
 alias lisa="ssh lisa"
