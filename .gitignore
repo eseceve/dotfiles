@@ -1,6 +1,7 @@
 # Ignore all .* files
 .*
-* # use `git add -f` to add a new file
+*.log
+* # use `git add -f` to add a new file
 
 # folders
 Applications
