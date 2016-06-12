@@ -19,8 +19,14 @@ let g:lightline = {
       \ 'component_type': {
       \   'syntastic': 'error',
       \ },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
+      \ 'subseparator': { 'left': '|', 'right': '|' },
+      \ 'mode_map': {
+      \   'n': 'N',
+      \   'i': 'I',
+      \   'v': 'V'
       \ }
+      \ }
+
 
 function! LightLineModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
