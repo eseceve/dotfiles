@@ -6,4 +6,8 @@ export EDITOR=vim
 export NVM_DIR="~/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
+export ANDROID_HOME=/usr/local/opt/android-sdk
+
+export NODE_ENV=development
+
 source ~/.aliases
