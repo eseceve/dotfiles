@@ -9,32 +9,21 @@
   call plug#begin()
 
   " Browsing/searching files/buffers
-    Plug 'jeetsukumaran/vim-buffergator'
-    Plug 'kien/ctrlp.vim'
-    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-    Plug 'mileszs/ack.vim'
+    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " A tree explorer plugin for vim.
 
   " General
-    Plug 'itchyny/lightline.vim'
-    Plug 'tpope/vim-unimpaired'
-    Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-repeat'
-    Plug 'sjl/clam.vim'
-    Plug 'vim-scripts/cr-bs-del-space-tab.vim'
-    Plug 'terryma/vim-multiple-cursors'
+    Plug 'itchyny/lightline.vim' " A light and configurable statusline/tabline for Vim
+    Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
+    Plug 'vim-scripts/cr-bs-del-space-tab.vim' " Use CR-TAB-DEL-SPACE-TAB in Normal Mode like in Insert Mode
+    Plug 'terryma/vim-multiple-cursors' " True Sublime Text style multiple selections for Vim
 
   " Git and GitHub
-    Plug 'tpope/vim-fugitive'
-    Plug 'gregsexton/gitv'
-    Plug 'mattn/gist-vim'
-    Plug 'mattn/webapi-vim'
+    Plug 'airblade/vim-gitgutter' " A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
+    Plug 'tpope/vim-git' " Vim Git runtime files
+    Plug 'tpope/vim-fugitive' " I'm not going to lie to you; fugitive.vim may very well be the best Git wrapper of all time
 
   " Programming
-    Plug 'scrooloose/syntastic'
-    Plug 'sjl/gundo.vim'
-    Plug 'tpope/vim-commentary'
-    Plug 'vim-scripts/matchit.zip'
-    Plug 'majutsushi/tagbar'
+    Plug 'scrooloose/syntastic' " Syntax checking hacks for vim
 
   " Python
     Plug 'vim-scripts/python_match.vim'
@@ -46,16 +35,13 @@
     Plug 'puppetlabs/puppet-syntax-vim'
 
   " Completion
-    Plug 'ervandew/supertab'
+    Plug 'ervandew/supertab' " Supertab is a vim plugin which allows you to use <Tab> for all your insert completion needs
 
   " Colorsquemes
     Plug 'altercation/vim-colors-solarized'
 
   " Jade
     Plug 'digitaltoad/vim-jade'
-
-  " autocompletition
-    Plug 'davidhalter/jedi-vim'
 
   " javascript
     Plug 'pangloss/vim-javascript'
