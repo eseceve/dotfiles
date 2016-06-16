@@ -144,7 +144,7 @@
     set scrolljump=5                  " Lines to scroll when cursor leaves screen
     set scrolloff=3                   " Minimum lines to keep above and below cursor
     set foldenable                    " Auto fold code
-    set foldmethod=syntax             " Fold code before open a new file
+    set foldmethod=indent             " Fold code before open a new file
     set foldlevel=99                  " Folding start closes
     set list
     set listchars=tab:→→,nbsp:·,eol:¬,trail:·,extends:# " Highlight problematic whitespace
