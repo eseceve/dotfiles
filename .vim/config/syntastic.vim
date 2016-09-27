@@ -8,5 +8,5 @@ let g:syntastic_c_check_header = 1
 let g:syntastic_cpp_check_header = 1
 
 if v:version == 700
-  let g:syntastic_enable_highlighting = 0
+  let g:syntastic_enable_highlighting = 1
 endif
