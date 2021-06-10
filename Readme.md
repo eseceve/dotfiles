@@ -9,6 +9,8 @@ Backup of configuration files for my development environment
 First, [download it from the official webpage](https://iterm2.com/downloads.html), install it and
 then import the `itermProfile.json` from preferences panel
 
+> Edit `itermProfile.json` adding the user directory. (find `<your_username>`)
+
 2. Clone
 
 ```sh
