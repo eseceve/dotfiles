@@ -1,68 +1,52 @@
 " Required options ============================================================
   set nocompatible
-
+  set ttymouse=sgr
+  set ballooneval
+  set balloonevalterm
 
 " Utilities ===================================================================
 
 
 " Plugins with vim-plug =======================================================
   call plug#begin()
+    " General
+      Plug 'itchyny/lightline.vim' " A light and configurable statusline/tabline for Vim
+      Plug 'wakatime/vim-wakatime'
 
-  " Browsing/searching files/buffers
-    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " A tree explorer plugin for vim.
+    " Git and GitHub
+      Plug 'airblade/vim-gitgutter' " A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
+      Plug 'tpope/vim-git' " Vim Git runtime files
+      Plug 'tpope/vim-fugitive' " I'm not going to lie to you; fugitive.vim may very well be the best Git wrapper of all time
+      Plug 'tpope/vim-rhubarb' " Github extesion for fugitive.vim
 
-  " General
-    Plug 'itchyny/lightline.vim' " A light and configurable statusline/tabline for Vim
-    Plug 'tpope/vim-surround' " quoting/parenthesizing made simple
-    Plug 'vim-scripts/cr-bs-del-space-tab.vim' " Use CR-TAB-DEL-SPACE-TAB in Normal Mode like in Insert Mode
-    Plug 'terryma/vim-multiple-cursors' " True Sublime Text style multiple selections for Vim
+    " Programming
+      Plug 'tpope/vim-commentary' " commentary.vim: comment stuff out
 
-  " Git and GitHub
-    Plug 'airblade/vim-gitgutter' " A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
-    Plug 'tpope/vim-git' " Vim Git runtime files
-    Plug 'tpope/vim-fugitive' " I'm not going to lie to you; fugitive.vim may very well be the best Git wrapper of all time
+    " Colorsquemes
+      Plug 'tomasiser/vim-code-dark'
 
-  " Programming
-    Plug 'scrooloose/syntastic' " Syntax checking hacks for vim
-
-  " Python
-    Plug 'vim-scripts/python_match.vim'
-    Plug 'vim-scripts/indentpython.vim'
-    Plug 'vim-scripts/vim-flake8'
-
-  " Markup languages
-    Plug 'hallison/vim-markdown'
-    Plug 'puppetlabs/puppet-syntax-vim'
-
-  " Completion
-    Plug 'ervandew/supertab' " Supertab is a vim plugin which allows you to use <Tab> for all your insert completion needs
-
-  " Colorsquemes
-    Plug 'altercation/vim-colors-solarized'
-
-  " Jade
-    Plug 'digitaltoad/vim-jade'
-
-  " javascript
-    Plug 'pangloss/vim-javascript'
-    Plug 'mxw/vim-jsx'
-    Plug 'elzr/vim-json'
-    Plug 'moll/vim-node'
-    Plug 'burnettk/vim-angular'
-    Plug 'leafgarland/typescript-vim'
+    " javascript
+      Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'typescript'] }
+      Plug 'maxmellon/vim-jsx-pretty', { 'for' : ['javascript', 'typescript'] } " The React syntax highlighting and indenting plugin for vim. Also supports the typescript tsx file.
+      Plug 'elzr/vim-json', { 'for': 'json' }
+      Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+      Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   call plug#end()
 
   " Config plugins
-
-    for file in split(glob('~/.vim/config/*.vim'), '\n')
+    for file in split(glob('~/.vim/config/*.config.vim'), '\n')
       exe 'source' file
     endfor
 
-
 " Set options ================================================================
   " General
-    filetype plugin indent on   " Automatically detect file types.
+    " Colorschemes
+    set t_Co=256
+    set t_ut=
+    colorscheme codedark
+
+    " filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
     set mouse=a                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
@@ -105,7 +89,7 @@
       set undodir=$HOME/.vim/files/undo/
     endif
 
-    set backup
+    " set backup
     set backupdir=$HOME/.vim/files/backup/
     set backupext=-vimbackup
     set backupskip=
@@ -119,8 +103,9 @@
     set noshowmode                    " Hide the current mode
 
     set cursorline                    " Highlight current line
-    set colorcolumn=80                " Highlight column 80
+    set colorcolumn=100               " [handle by editorConfig] Highlight column 80
 
+    set signcolumn=yes
     highlight clear SignColumn        " SignColumn should match background
     highlight clear LineNr            " Current line number row will have same background color in relative mode
 
@@ -184,6 +169,7 @@
     nmap <leader>f8 :set foldlevel=8<CR>
     nmap <leader>f9 :set foldlevel=9<CR>
 
+
   " Toggle ['] and [`] keys for moving to marks
     nnoremap ' `
     nnoremap ` '
@@ -222,6 +208,11 @@
     if maparg('<C-L>', 'n') ==# ''
       nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
     endif
+
+  " Plugins mapping
+    for file in split(glob('~/.vim/config/*.mapping.vim'), '\n')
+      exe 'source' file
+    endfor
 
 " Auto commands ===============================================================
 
@@ -269,5 +260,16 @@
   " some
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
+  " Plugins autocommand
+    for file in split(glob('~/.vim/config/*.auto.vim'), '\n')
+      exe 'source' file
+    endfor
 
+  " Rename Tmux pane with filename of vim buffer or repository name
+    autocmd VimEnter * call system("tmux select-pane -T " . expand("%:t"))
+    autocmd VimLeave * call system("tmux select-pane -T $(basename `git rev-parse --show-toplevel`)")
+
+  " Improved perf of syntax highlighting
+    autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+    autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
   augroup END

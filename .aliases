@@ -5,17 +5,8 @@ alias gs="git status -sb"
 alias gst="git stash"
 alias gsp="git stash pop"
 alias guc="git reset --soft HEAD^"
-
-# git flow
-alias gff="git flow feature"
-alias gfh="git flow hotfix"
-alias gfr="git flow release"
-alias gfs="git flow support"
-
-# vagrant
-alias vup="vagrant up"
-alias vash="vagrant ssh"
-alias voff="vagrant halt"
+alias ggrep="git grep -n -i --break --heading"
+alias cg='cd `git rev-parse --show-toplevel`'
 
 # more verbose file utilities
 alias mv="mv -vi"
@@ -26,7 +17,6 @@ alias chown="chown -v"
 
 # others
 alias vi="vim"
-alias bower="noglob bower"
 alias xx="tmux"
 alias xa="tmux a"
 alias xls="tmux ls"
@@ -34,8 +24,3 @@ alias virc="vi ~/.vimrc"
 
 # type errors
 alias vu=vi
-alias {=~
-
-# YAPO.cl
-alias jenna="ssh jenna"
-alias lisa="ssh lisa"

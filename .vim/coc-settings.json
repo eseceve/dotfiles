@@ -1,0 +1,9 @@
+{
+  // prettier
+  "prettier.disableSuccessMessage": true,
+  "prettier.eslintIntegration": true,
+
+  // eslintt
+  "eslint.run":"onSave",
+  "eslint.autoFixOnSave": true
+}

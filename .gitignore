@@ -1,23 +1,2 @@
-# Ignore all .* files
-.*
+.DS_Store
 *.log
-* # use `git add -f` to add a new file
-
-# folders
-Applications
-Desktop
-Documents
-Downloads
-Dropbox
-Google\ Drive
-Library
-MEGASync
-MEGASync\ Downloads
-Movies
-Music
-Pictures
-Public
-VirtualBox\ VMs
-bin
-src
-tmp
