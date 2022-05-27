@@ -14,7 +14,7 @@ plugins=(
   autojump
   brew
   git
-  osx
+  macos
   tmux tmuxinator
   # custom
   cdnvm

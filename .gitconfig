@@ -1,6 +1,6 @@
 [user]
-  name = <insert_name>
-  email = <insert_email>
+  name = <your_git_name>
+  email = <your_git_email>
 [fetch]
   prune = true
 [pull]

@@ -4,61 +4,56 @@ Backup of configuration files for my development environment
 
 ## Usage
 
-1. Install Iterm 2 and config it
+1. Install Iterm 2
 
-First, [download it from the official webpage](https://iterm2.com/downloads.html), install it and
-then import the `itermProfile.json` from preferences panel
+    [Download it from the official webpage][iterm-link] and install it
 
-> Edit `itermProfile.json` adding the user directory. (find `<your_username>`)
+2. Install Oh-My-ZSH
 
-2. Clone
+    Follow [the official instructions][ohmyzsh-link]
 
-```sh
-cd ~
-git clone git@github.com:eseceve/dotfiles.git
-```
+3. Install [brew][brew-link] apps
 
-3. Install Oh-My-ZSH
+    ```sh
+    brew install autojump gettext git git-extras node tmux vim
+    ````
 
-Follow [the official instructions](https://github.com/ohmyzsh/ohmyzsh#basic-installation)
+4. Install NVM
 
-4. Install brew apps
+    Prefer install it following
+    [this official instructions][nvm-link]
+    instead of use Brew to avoid weird behaviors
 
-```sh
-brew install autojump gettext git git-extras node tmux vim
-````
+5. Clone this repository
 
-5. Install NVM
+    > Make sure you have [configured your github account][github-account-link]
 
-Prefer install it following [this official instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
-instead of use Brew to avoid weird behaviors
+    ```sh
+    cd ~
+    git clone git@github.com:eseceve/dotfiles.git
+    ```
 
-6. Copy configuration files
+6. Copy your dotfiles
 
-```sh
-cd ~/dotfiles
-cp $(cat FILES_TO_COPY) ../.
-```
+    ```sh
+    cd ~/dotfiles
+    ./copy-files.sh
+    ```
 
-7. Copy OhMyZSH custom plugin
-
-```sh
-mkdir ~/.oh-my-zsh/custom/plugins/cdnvm
-cd ~/dotfiles
-cp cdnvm.plugin.zsh ~/.oh-my-zsh/custom/plugins/cdnvm/.
-```
+7. Update Iterm profile:
+    1. Open the Iterm's preferences (`cmd + ,`)
+    2. Go to `Profiles` tab
+    3. Import the `~/Documents/itermProfile.json` from `Other actions` selector below your lists of profiles
+    4. Set "DotFiles profile" as default profile from the same selector
 
 8. Install VIM plugins
 
-Open any file with `vi` and run `:PlugInstall`
+    Open any file with `vi` and run `:PlugInstall`
 
+9. Enjoy it!
 
-9. Update git config
-
-```sh
-vi ~/.gitconfig
-```
-
-> Add my name and email
-
-10. Enjoy it!
+[brew-link]:https://brew.sh
+[github-account-link]:https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
+[iterm-link]:https://iterm2.com/downloads.html
+[nvm-link]:https://github.com/nvm-sh/nvm#installing-and-updating
+[ohmyzsh-link]:https://github.com/ohmyzsh/ohmyzsh#basic-installation
